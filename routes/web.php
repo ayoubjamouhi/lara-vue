@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\Project\ProjectController;
+use App\Jobs\StreamingVideo;
 use App\Mail\MailSendTest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::resource('/projects', ProjectController::class);
+
+Route::get('/queue',function() {
+    StreamingVideo::dispatch()->onQueue('stream');
+    return 'Finished';
+});
 require __DIR__.'/auth.php';

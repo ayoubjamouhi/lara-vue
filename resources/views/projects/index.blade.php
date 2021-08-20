@@ -9,6 +9,14 @@
 </head>
 <body>
     index
+    @foreach($projects as $project)
+        <p>{{$project->name}}</p>
+        <ul>
+            @foreach($project->users as $user)
+            <li style="color: #4fcc90">{{$user->name}}</li>
+        @endforeach
+        </ul>
+    @endforeach
     @can('project_store')
         <a href="/projects/create">Create</a>
     @endcan
