@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\StartStreaming;
 use App\Http\Controllers\Project\ProjectController;
 use App\Jobs\StreamingVideo;
 use App\Mail\MailSendTest;
@@ -35,10 +36,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('/projects', ProjectController::class);
+Route::resource('/projects', ProjectController::class)->middleware('auth');
 
 Route::get('/queue',function() {
     StreamingVideo::dispatch()->onQueue('stream');
     return 'Finished';
 });
+
+Route::get('/stream',function() {
+    event(StartStreaming::class);
+    return 'Finished';
+});
+
 require __DIR__.'/auth.php';

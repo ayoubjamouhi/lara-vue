@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Project;
 
-use App\Domain\Project\Model\Project;
+use App\Services\ProjectService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 
-use App\Domain\Project\ProjectService;
+use App\Models\Project;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,10 +51,12 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        abort_if(Gate::denies('project_store'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $projects = $request->all();
-        $store = Project::create($projects);
-
+        //abort_if(Gate::denies('project_store'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+       // $projects = $request->all();
+        //$store = Project::create($projects);
+        //dd($request->user());
+        $store = $request->user()->projects()->save(new Project(['name' => $request->name]));
+        dd($store);
         return 'ok';
     }
 

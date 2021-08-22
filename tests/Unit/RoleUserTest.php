@@ -15,7 +15,6 @@ class RoleUserTest extends TestCase
     public function UserRole()
     {
         $this->withoutExceptionHandling();
-        User::
         $user = User::with('role')->get();
         dd($user);
         $this->assertCount(1, $user);

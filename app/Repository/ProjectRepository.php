@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Project\Repository;
+namespace App\Repository;
 
-use App\Domain\Project\Model\Project;
+use App\Models\Project;
 
 class ProjectRepository
 {
